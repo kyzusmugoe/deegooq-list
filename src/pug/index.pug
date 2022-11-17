@@ -1,0 +1,13 @@
+doctype html
+html
+    include ./comps/header.pug
+    body 
+        include ./comps/landscape.pug
+        div.app.portrait(style="display:none")
+            //首頁
+            include ./comps/start.pug
+            //列表
+            include ./comps/list.pug
+            //播放器
+            include ./comps/player.pug
+        include ./comps/loading.pug
