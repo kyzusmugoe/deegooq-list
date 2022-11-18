@@ -1,18 +1,3 @@
-//const surveycakeURL = 'https://www.surveycake.com/'
-//const sendDataURL = 'https://www.TEST.com/POST/API'
-
-//頁面紀錄 從localStorage取得deegooq_current_page的頁面資料
-//let currentPage = 'start'
-
-/*
-if(window.localStorage.getItem('deegooq_current_page')){
-    currentPage = window.localStorage.getItem('deegooq_current_page')
-    console.log('deegooq_current_page', currentPage)
-}
-*/
-
-//currentPage = 'Q4-2'
-
 //使用者資料 從localStorage取得deegooq_current_page的頁面資料
 if(window.localStorage.getItem('deegooq_current_data') && currentPage != 'start'){
     collectData =JSON.parse( window.localStorage.getItem('deegooq_current_data'))
@@ -49,6 +34,7 @@ class MyPlayer{
     YTPlayer={}
     timeCount = 0
     countAction=(time)=>{}//計時器的行為
+    interval = null
     constructor(){
         console.log('init MyPlayer')
         setTimeout(() => {
@@ -60,23 +46,30 @@ class MyPlayer{
                     },
                     'onStateChange': e=>{
                         console.log(e)
-                        if(e.data == 1) tr = setInterval(trf, 1000)
-                        if(e.data == 0 || e.data == 2) clearInterval(tr)
+                        if(e.data == 1) this.interval = setInterval(this.intervalAction, 1000)
+                        
+                        if(e.data == 0 || e.data == 2) clearInterval(interval)
                     }
                 }
             });
         }, 1000);
     }
+    
+    intervalAction =()=>{
+        this.timeCount++
+        this.countAction()
+    }
+
     setMov = id =>{
         this.timeCount = 0
         this.YTPlayer.loadVideoById(id)
     }
-
-    trf = () => { 
-        //console.log("timer count!") 
-        this.timeCount = ++
-        this.countAction()
-       
+    play = () =>{
+        this.YTPlayer.playVideo();
+    }
+    pause=()=>{
+        this.timeCount = 0
+        this.YTPlayer.pauseVideo();
     }
 }
 
@@ -87,7 +80,7 @@ window.onload = () => {
         if (event.touches.length > 1) {
             event.preventDefault();
         }
-    }, { passive: false });   
+    }, { passive: false });
     let lastTouchEnd = 0;
     document.addEventListener('touchend', (event) => {
         const now = (new Date()).getTime();
@@ -109,6 +102,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         })
     }
+
     //#region 偵測頁面方向
     const detectOrientation =  () => {
         //console.log( window.orientation )
@@ -152,17 +146,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     //#endregion
 
-    //#region 資料收集器 data collector
-    const setDataCollector = (key, value)=>{
-        collectData = {
-            ...collectData,
-            [key]:value
-        }
-        window.localStorage.setItem('deegooq_current_data', JSON.stringify(collectData))
-        console.log(collectData)
-    }
-    //#endregion
-
     //#region 讀取json設定檔
     const loadData = () => {
         fetch("./js/data.json", {
@@ -186,25 +169,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     //#endregion
- 
-    //#region 個人資料的button group
-    const setButtonGroup = ()=>{
-        document.querySelectorAll(".button-group").forEach(btn=>{
-            btn.addEventListener("click", event=>{
-                const _t = event.currentTarget
-                const _g = _t.dataset.group
-                const _v = _t.dataset.value
-                document.querySelectorAll(`.button-group[data-group=${_g}]`).forEach(gBtn=>{
-                    gBtn.classList.remove('on')
-                })
-                _t.classList.add('on')
-                setDataCollector(_g, _v)
-            })
-        })
-    }
-    //#endregion
 
-    
     const clearMovList = () =>{
         const box = document.querySelector('#listBox')            
         while (box.firstChild) {
@@ -255,22 +220,6 @@ document.addEventListener('DOMContentLoaded', () => {
         })
     }
 
-    //#region 計時器元件
-    const setTimer = (ct, VID, endF)=>{
-        let _ct = ct
-        const timer = setInterval(()=>{
-            console.log(`${VID} timer count left ${_ct}`)
-            _ct--
-            document.querySelector(VID).innerHTML = _ct
-            if(_ct == 0){
-                endF()
-            }
-        }, 1000);
-        
-        return timer
-    }
-    //#endregion
-
     //init
     loadData()
     loadImgManager()
@@ -279,45 +228,13 @@ document.addEventListener('DOMContentLoaded', () => {
     document.querySelector('#start').style.display = "flex"
     setBtnsHandler()
     setTypeBtns()
-    //setButtonGroup()
-    let youPlayer;
-    let tr 
-    let ct=0
-    let trf = ()=>{ 
-        //console.log("timer count!") 
-        ct++
-        mesgPack.map(pack=>{
-            if(pack.time == ct){
-                console.log(pack.text)
-            }
-        })
-    }
-    /*
-    const onYouTubeIframeAPIReady = ()=> {
-        youPlayer = new YT.Player('youPlayer', {
-            events: {
-                'onReady':  e=>{
-                    console.log(e)                    
-                    //e.target.loadVideoById('DmWoaB7fM5U')
-                },
-                'onStateChange': e=>{
-                    console.log(e)
-                    if(e.data == 1) tr = setInterval(trf, 1000)
-                    if(e.data == 0 || e.data == 2) clearInterval(tr)
-                }
-            }
-        });
-    }
-    */
-    //setTimeout( onYouTubeIframeAPIReady, 1000)
-    
+
     document.querySelector("#yPlay").addEventListener('click', ()=>{
-        youPlayer.playVideo();
-       //youPlayer.loadVideoById('DmWoaB7fM5U') 
+        myPlayer.pause()
     })
 
     document.querySelector("#yStop").addEventListener('click', ()=>{
-        youPlayer.pauseVideo();    
+        myPlayer.pause()  
         //youPlayer.loadVideoById('DmWoaB7fM5U') //知覺動作 
         //youPlayer.loadVideoById('OQHHP3KW6b4') //記憶力 
         //youPlayer.loadVideoById('oCHqzlUpOO')  //執行力
@@ -325,8 +242,7 @@ document.addEventListener('DOMContentLoaded', () => {
         //youPlayer.loadVideoById('n8hHkNLTmPE')  //語言能力
     })
     document.querySelector("#yBack").addEventListener('click', ()=>{
-        youPlayer.pauseVideo();
-        ct = 0
+        myPlayer.pause()
         openPage("#list")
      })
 })
