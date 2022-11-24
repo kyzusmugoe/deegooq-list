@@ -5,24 +5,30 @@
     #listBox
         .listRow
             display: flex
+            flex-direction: column
+            .txt
+                margin-left: 20px
+                margin-bottom: 10px
+                position: relative
+                
+                &::before
+                    position: absolute
+                    content:""
+                    width: 5px
+                    height: 5px
+                    border: 3px solid #EB4452
+                    border-radius: 50%
+                    top:8px
+                    left: -16px
             .barBox
-                width: 100%
-                max-width: 150px
+                width: calc(100% - 40px)
                 display: flex
-                > div
-                    height:15px
-                > div:nth-child(1)
-                    background-color: #fc0
-                
-                > div:nth-child(2)
-                    background-color: #f0c
-                
-                > div:nth-child(3)
-                    background-color: #0fc
-                
-                > div:nth-child(4)
-                    background-color: #c0f
-                
-                > div:nth-child(5)
-                    background-color: #cf0
-            
+                margin-left:20px 
+                margin-bottom:30px 
+                div.bar
+                    z-index: 1
+                    text-align: center
+                    div.colorBar
+                        display: flex
+                        justify-content: center
+                        height:12px

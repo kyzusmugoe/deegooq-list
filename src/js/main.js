@@ -92,7 +92,6 @@ window.onload = () => {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-
     //建立計時器
     let myPlayer = new MyPlayer()
     myPlayer.countAction =()=>{
@@ -162,7 +161,9 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }).then(res => {
             mainData = res
-            console.log(mainData)
+            //console.log(mainData)
+            setTypeBtns()
+
         }).catch(error => {
             console.error('json 取得失敗:', error)
         });
@@ -180,9 +181,17 @@ document.addEventListener('DOMContentLoaded', () => {
     const setBar = data  =>{
         const barBox = document.createElement('div')
         barBox.classList.add('barBox')
-        data.map( value =>{
+        data.map( bar =>{            
             const _b = document.createElement('div')
-            _b.style.flex = `${value} 0 auto`
+            const _color = document.createElement('div')
+            const _txt = document.createElement('span')
+            _b.style.flex = `${bar.value} 0 auto`
+            _b.classList.add('bar')
+            _color.style.backgroundColor = bar.color
+            _color.classList.add('colorBar')
+            _txt.innerHTML = bar.txt
+            _b.appendChild(_color)
+            _b.appendChild(_txt)
             barBox.appendChild(_b)
         })
         return barBox
@@ -196,6 +205,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const txt = document.createElement('span')
             const bar = setBar(data.bar)
             txt.innerHTML = data.title
+            txt.classList.add('txt')
             row.classList.add('listRow')
             row.addEventListener('click', ()=>{
                 mesgPack = data.mesg
@@ -209,25 +219,33 @@ document.addEventListener('DOMContentLoaded', () => {
         openPage('#list')
     }
     
+    //設置主頁按鈕
     const setTypeBtns=()=>{
-        document.querySelectorAll(".typeBtn").forEach(btn=>{
+        const box = document.querySelector('#typeBtnBox')
+        for(let key in mainData){
+            console.log(key)
+            const _d = mainData[key]
+            const btn = document.createElement('div')
+            btn.innerHTML = _d.title
+            btn.dataset.type = key
+            btn.classList.add("typeBtn", key)
             btn.addEventListener("click", event=>{
                 const _t = event.target.dataset.type
                 if(mainData[_t].list){
                     setMovList(_t)
                 }
             })
-        })
+            box.appendChild(btn)
+        }
     }
 
     //init
-    loadData()
-    loadImgManager()
     closeAll()
+    loadImgManager()
+    loadData()
     //document.querySelector(`#${currentPage}`).style.display = "flex"
     document.querySelector('#start').style.display = "flex"
     setBtnsHandler()
-    setTypeBtns()
 
     document.querySelector("#yPlay").addEventListener('click', ()=>{
         myPlayer.pause()
@@ -235,11 +253,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     document.querySelector("#yStop").addEventListener('click', ()=>{
         myPlayer.pause()  
-        //youPlayer.loadVideoById('DmWoaB7fM5U') //知覺動作 
-        //youPlayer.loadVideoById('OQHHP3KW6b4') //記憶力 
-        //youPlayer.loadVideoById('oCHqzlUpOO')  //執行力
-        //youPlayer.loadVideoById('T0PFz0PRrEs')  //專注力
-        //youPlayer.loadVideoById('n8hHkNLTmPE')  //語言能力
     })
     document.querySelector("#yBack").addEventListener('click', ()=>{
         myPlayer.pause()

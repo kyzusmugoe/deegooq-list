@@ -1,40 +1,85 @@
 @mixin start()
     #start        
+        font-weight: bolder
         @media screen and (min-width:$PadWidth)
             padding-top: 60px 
-        &::before
-            content: " "
-            position: absolute
-            width: 320px
-            height: 460px
-            left: calc(50% - 250px)
-            background: url('../img/plant_1.png') no-repeat center center
-            top: 260px
-            @media screen and (min-width:$PadWidth)
-                top: 440px 
-            background-size: 100%
-            z-index: -1
+        font-weight: bolder
+        @media screen and (min-width:$PadWidth)
+            padding-top: 60px 
+
         img.logo
             padding-top: 40px
-        div.chatBox
-            background: url('../img/chat_1.svg') no-repeat center center
-            background-size: 100%
-            max-width: 360px
-            height: 180px
-            @media screen and (min-width:$PadWidth)
-                height: 280px 
-            @include flexBox(center, center)
-            div.text
-                width: 240px
-                font-size: 20px
-                font-weight: 700
-                line-height: 29px
-        .character
-            margin-top: -20px
-            img
-                max-width: 190px
-                width: 100%
+            @media screen and (max-height:660px)
+                width: 200px
+                padding-top: 20px 
+        
+        .intro
+            margin-top: 20px
+            @media screen and (max-height:660px)
+                margin-top: 10px 
+            font-size: 24px
+        
+        #typeBtnBox
+            display: flex
+            flex-direction: column
+            align-items: center
 
+        .typeBtn
+            font-size: 24px
+            display: flex
+            justify-content: center
+            align-items: center
+            width: 210px
+            height: 80px
+            background-image: url('./img/btn_main.svg')
+            background-repeat: no-repeat
+            background-position: center
+            background-size:100%
+            position: relative 
+            &::after
+                content:""
+                position: absolute
+                width:65px
+                height: 38px
+                background-size:100%
+                background-repeat: no-repeat
+                background-position: center
+                top:-20px
+            @media screen and (max-height:660px)
+                width: 180px
+                height: 70px
+            &.q1
+                transform: translateX(-70px)
+                &::after
+                    left: 10px
+                    background-image: url('./img/deegooq_2.svg')
+            &.q2
+                transform: translateX(70px)
+                &::after
+                    transform: rotate(7deg)
+                    right: 10px
+                    background-image: url('./img/deegooq_4.svg')
+            &.q3
+                transform: translateX(-70px)
+                &::after
+                    height: 50px
+                    top: -30px
+                    transform: rotate(-7deg)
+                    left: 10px
+                    background-image: url('./img/deegooq_1.svg')
+            &.q4
+                transform: translateX(70px)
+                &::after
+                    transform: rotate(7deg)
+                    right: 10px
+                    background-image: url('./img/deegooq_3.svg')
+            &.q5
+                transform: translateX(-70px)
+                &::after
+                    transform: rotate(-7deg)
+                    top: -15px
+                    left: 10px
+                    background-image: url('./img/deegooq_5.svg')
         .BPBtn.pageBtn.main
             @media screen and (min-width:$PadWidth)
                 margin-top: 60px 

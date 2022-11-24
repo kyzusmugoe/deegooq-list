@@ -1,19 +1,28 @@
 {
     "q1":{
+        "title":"專注力",
         "list":[
             {
-                "title":"影片標題1",
-                "videoId":"DmWoaB7fM5U",
-                "bar":[1,1,1,1,1],
+                "title":"做出和老師相反動作",
+                "videoId":"/Qtn7eOGjNJA",
+                "bar":[
+                    {"txt":"專注", "value":2, "color":"#E18890"},
+                    {"txt":"知覺", "value":2, "color":"#22ACB2"},
+                    {"txt":"執行", "value":1, "color":"#ECCB4D"}
+                ],
                 "mesg":[
                     {"time":5, "text":"hi!"},
                     {"time":10, "text":"hello!"}
                 ]
             },
             {
-                "title":"影片標題2",
+                "title":"做出和老師相反動作",
                 "videoId":"OQHHP3KW6b4",
-                "bar":[1,1,1,2,3],
+                "bar":[
+                    {"txt":"專注", "value":2, "color":"#E18890"},
+                    {"txt":"知覺", "value":2, "color":"#22ACB2"},
+                    {"txt":"執行", "value":1, "color":"#ECCB4D"}
+                ],
                 "mesg":[
                     {"time":8, "text":"Yo!"},
                     {"time":13, "text":"checkout!"}
@@ -21,8 +30,68 @@
             }
         ]
     },
-    "q2":[],
-    "q3":[],
-    "q4":[],
-    "q5":[]
+    "q2":{
+        "title":"知覺動作",
+        "list":[ {
+            "title":"做出和老師相反動作",
+            "videoId":"DmWoaB7fM5U",
+            "bar":[
+                {"txt":"專注", "value":2, "color":"#E18890"},
+                {"txt":"知覺", "value":2, "color":"#22ACB2"},
+                {"txt":"執行", "value":1, "color":"#ECCB4D"}
+            ],
+            "mesg":[
+                {"time":5, "text":"hi!"},
+                {"time":10, "text":"hello!"}
+            ]
+        }]
+    },
+    "q3":{
+        "title":"記憶力",
+        "list":[ {
+            "title":"做出和老師相反動作",
+            "videoId":"OQHHP3KW6b4",
+            "bar":[
+                {"txt":"專注", "value":2, "color":"#E18890"},
+                {"txt":"知覺", "value":2, "color":"#22ACB2"},
+                {"txt":"執行", "value":1, "color":"#ECCB4D"}
+            ],
+            "mesg":[
+                {"time":5, "text":"hi!"},
+                {"time":10, "text":"hello!"}
+            ]
+        }]
+    },
+    "q4":{
+        "title":"執行力",
+        "list":[ {
+            "title":"做出和老師相反動作",
+            "videoId":"oCHqzlUpOO",
+            "bar":[
+                {"txt":"專注", "value":2, "color":"#E18890"},
+                {"txt":"知覺", "value":2, "color":"#22ACB2"},
+                {"txt":"執行", "value":1, "color":"#ECCB4D"}
+            ],
+            "mesg":[
+                {"time":5, "text":"hi!"},
+                {"time":10, "text":"hello!"}
+            ]
+        }]
+    },
+    "q5":{
+        "title":"語言力",
+        "list":[ {
+            "title":"做出和老師相反動作",
+            "videoId":"n8hHkNLTmPE",
+            "bar":[
+                {"txt":"專注", "value":2, "color":"#E18890"},
+                {"txt":"知覺", "value":2, "color":"#22ACB2"},
+                {"txt":"執行", "value":1, "color":"#ECCB4D"}
+            ],
+            "mesg":[
+                {"time":5, "text":"hi!"},
+                {"time":10, "text":"hello!"}
+            ]
+        }]
+    }
 }
