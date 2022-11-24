@@ -39,6 +39,16 @@ class MyPlayer{
         console.log('init MyPlayer')
         setTimeout(() => {
             this.YTPlayer = new YT.Player('youPlayer', {
+                playerVars: {
+                    'autoplay': 1,
+                    'controls': 0,
+                    'disablekb': 1,
+                    'fs': 0,
+                    'loop': 1,
+                    'modestbranding': 1,
+                    'rel': 0,
+                    'showinfo': 0,
+                },
                 events: {
                     'onReady':  e=>{
                         console.log(e)                    
@@ -48,7 +58,7 @@ class MyPlayer{
                         console.log(e)
                         if(e.data == 1) this.interval = setInterval(this.intervalAction, 1000)
                         
-                        if(e.data == 0 || e.data == 2) clearInterval(interval)
+                        if(e.data == 0 || e.data == 2) clearInterval(this.interval)
                     }
                 }
             });
@@ -257,6 +267,10 @@ document.addEventListener('DOMContentLoaded', () => {
     document.querySelector("#yBack").addEventListener('click', ()=>{
         myPlayer.pause()
         openPage("#list")
-     })
+    })
+    document.querySelector("#backList").addEventListener('click', ()=>{
+        myPlayer.pause()
+        openPage("#list")
+    })
 })
 
