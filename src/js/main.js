@@ -226,6 +226,27 @@ document.addEventListener('DOMContentLoaded', () => {
     const setMovList = type=>{
         clearMovList()
         const box = document.querySelector('#listBox')
+        let prepareToPlay = 5 
+
+        const gotoPlay = ()=>{
+            myPlayer.unMute()
+            myPlayer.replay()//重新開始播放
+            openPage('#player')
+        }
+
+        const count =()=>{
+            prepareToPlay--
+            setTimeout(()=>{
+                if(prepareToPlay == 0){
+                    gotoPlay()
+                    prepareToPlay = 5
+                }else{
+                    count()
+                }
+            }, 1000)
+            console.log(prepareToPlay)
+        }
+        
         mainData[type].list.map(data=>{
             const row = document.createElement('div')
             const txt = document.createElement('span')
@@ -240,11 +261,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 openPage('#count')
                 myPlayer.play()//先播放，避免看到標頭
                 myPlayer.mute()
-                setTimeout(()=>{
-                    myPlayer.unMute()
-                    myPlayer.replay()//重新開始播放
-                    openPage('#player')
-                }, 5000)
+
+                count()
             })
             row.appendChild(txt)
             row.appendChild(bar)
