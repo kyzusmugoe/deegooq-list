@@ -14,6 +14,7 @@ $PadWidth:650px
 @import './start.sass'
 @import './personal.sass'
 @import './list.sass'
+@import './player.sass'
 @import './end.sass'
 
 @mixin flexBox($row, $col)
@@ -162,7 +163,7 @@ body
             width: 100%
             position: fixed
             left: 0
-            bottom: 0
+            bottom: -5px
             height: 90px
             font-size: 24px
             font-weight: 700
@@ -377,21 +378,10 @@ body
             //riderMap
 
         
-        .playerBox
-            width: 100%
-            height: 100%
-            position: relative
-            padding-bottom: 89%
-            pointer-events: none
-            iframe
-                position: absolute
-                top: 0
-                left: 0
-                width: 100%
-                height: 100%
-
+       
         
         @include start()
         @include personal()
         @include list()
+        @include player()
         @include end() 

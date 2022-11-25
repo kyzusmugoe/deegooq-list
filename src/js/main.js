@@ -29,25 +29,23 @@ const loadImgManager = ()=>{
     loadImgAssets(`./img/${assetsList[ct]}`)
 }
 
-//自定義播放器
+//#region自定義播放器
 class MyPlayer{
     YTPlayer={}
     timeCount = 0
     countAction=(time)=>{}//計時器的行為
+    doEnd = ()=>{}//結束後行為
     interval = null
+    
     constructor(){
         console.log('init MyPlayer')
         setTimeout(() => {
             this.YTPlayer = new YT.Player('youPlayer', {
                 playerVars: {
-                    'autoplay': 1,
                     'controls': 0,
-                    'disablekb': 1,
-                    'fs': 0,
-                    'loop': 1,
-                    'modestbranding': 1,
-                    'rel': 0,
-                    'showinfo': 0,
+                    'modestbranding':1,
+                    'autoplay':1,
+                    'showinfo':0
                 },
                 events: {
                     'onReady':  e=>{
@@ -57,8 +55,8 @@ class MyPlayer{
                     'onStateChange': e=>{
                         console.log(e)
                         if(e.data == 1) this.interval = setInterval(this.intervalAction, 1000)
-                        
                         if(e.data == 0 || e.data == 2) clearInterval(this.interval)
+                        if(e.data == 0) this.doEnd()
                     }
                 }
             });
@@ -73,18 +71,28 @@ class MyPlayer{
     setMov = id =>{
         this.timeCount = 0
         this.YTPlayer.loadVideoById(id)
+        this.YTPlayer.pauseVideo();
     }
     play = () =>{
         this.YTPlayer.playVideo();
+    }
+    replay = () =>{
+        this.YTPlayer.seekTo(0);
+    }
+    mute = () =>{
+        this.YTPlayer.mute();
+    }
+    unMute = () =>{
+        this.YTPlayer.unMute();
     }
     pause=()=>{
         this.timeCount = 0
         this.YTPlayer.pauseVideo();
     }
 }
+//#endregion
 
-
-//防止double tap 
+//#region 防止double tap 
 window.onload = () => {
     document.addEventListener('touchstart', (event) => {
         if (event.touches.length > 1) {
@@ -100,17 +108,10 @@ window.onload = () => {
         lastTouchEnd = now;
     }, false);
 }
+//#endregion
 
 document.addEventListener('DOMContentLoaded', () => {
-    //建立計時器
-    let myPlayer = new MyPlayer()
-    myPlayer.countAction =()=>{
-        mesgPack.map(pack=>{
-            if(pack.time == myPlayer.timeCount){
-                console.log(pack.text)
-            }
-        })
-    }
+   
 
     //#region 偵測頁面方向
     const detectOrientation =  () => {
@@ -181,6 +182,21 @@ document.addEventListener('DOMContentLoaded', () => {
 
     //#endregion
 
+    //#region 建立自定義播放器物件
+    let myPlayer = new MyPlayer()
+    myPlayer.countAction =()=>{
+         mesgPack.map(pack=>{
+             if(pack.time == myPlayer.timeCount){
+                 console.log(pack.text)
+             }
+         })
+     }
+    myPlayer.doEnd =()=>{
+        openPage('#end')
+    }
+    //#endregion
+
+
     const clearMovList = () =>{
         const box = document.querySelector('#listBox')            
         while (box.firstChild) {
@@ -220,7 +236,15 @@ document.addEventListener('DOMContentLoaded', () => {
             row.addEventListener('click', ()=>{
                 mesgPack = data.mesg
                 myPlayer.setMov(data.videoId)
-                openPage('#player')
+                //openPage('#player')
+                openPage('#count')
+                myPlayer.play()//先播放，避免看到標頭
+                myPlayer.mute()
+                setTimeout(()=>{
+                    myPlayer.unMute()
+                    myPlayer.replay()//重新開始播放
+                    openPage('#player')
+                }, 5000)
             })
             row.appendChild(txt)
             row.appendChild(bar)
@@ -256,7 +280,7 @@ document.addEventListener('DOMContentLoaded', () => {
     //document.querySelector(`#${currentPage}`).style.display = "flex"
     document.querySelector('#start').style.display = "flex"
     setBtnsHandler()
-
+    /*
     document.querySelector("#yPlay").addEventListener('click', ()=>{
         myPlayer.pause()
     })
@@ -268,6 +292,8 @@ document.addEventListener('DOMContentLoaded', () => {
         myPlayer.pause()
         openPage("#list")
     })
+    */
+    console.log(document.querySelector("#backList"))
     document.querySelector("#backList").addEventListener('click', ()=>{
         myPlayer.pause()
         openPage("#list")

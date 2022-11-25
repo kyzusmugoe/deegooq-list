@@ -1,0 +1,30 @@
+@mixin player()
+    #player
+        overflow: hidden
+        z-index: 1
+
+        .logo
+            position: absolute
+            z-index: 100
+            width: 100px
+            height: 80px
+            top: 0
+            left: 10px
+
+        .playerBox
+            width: 100%
+            height: 100%
+            position: relative
+            padding-bottom: 89%
+            pointer-events: none
+            iframe
+                position: absolute
+                top: 0
+                left: 0
+                width: 100%
+                height: 100%
+            #youPlayer
+                overflow: hidden
+                pointer-events: none
+                .ytp-show-cards-title
+                    background-color: #F00
