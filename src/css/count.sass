@@ -1,0 +1,57 @@
+@mixin count()
+    $size: 180px
+    #count
+        
+        #bubble
+            width: $size
+            height: $size
+            background-image: url('./img/bubble.svg')
+            background-size: ($size * 6) auto
+            background-repeat: no-repeat
+            animation: bubbleAmin 1s
+            animation-fill-mode: forwards
+            animation-timing-function: step-end
+            animation-iteration-count: 5
+            display: flex
+            justify-content: center
+            align-items: center
+            font-size: 4em
+            font-weight: bolder
+            text-shadow: 0 0 10px rgba(0, 0, 0, .8)
+            &::after
+                content: ''
+                animation: countAmin 5s
+                animation-iteration-count: 1
+                animation-timing-function: step-end
+    
+    @keyframes countAmin
+        0%
+            content: '5'
+        20%
+            content: '4'
+        40%
+            content: '3'
+        60%
+            content: '2'
+        80%
+            content: '1'
+        100%
+            content: ''
+
+    @keyframes bubbleAmin
+        0%
+            background-position: 0 0
+        83%
+            background-position: (-$size) 0
+        86%
+            background-position: (-$size * 2) 0
+        90%
+            background-position: (-$size * 3) 0
+        93%
+            background-position: (-$size * 4) 0
+            transform: scale(1.4)
+        96%
+            background-position: (-$size * 5) 0
+            transform: scale(1.8)
+        100% 
+            background-position: (-$size * 6) 0

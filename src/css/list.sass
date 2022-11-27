@@ -2,7 +2,77 @@
 
 @mixin list()
     #list
+        .row
+            display: flex
+            flex-direction: column
+            height: 100%
+
+    #characterChart
+        //margin-top: 50px
+        //height: 250px
+        flex: 0 0 330px
+        z-index: 10
+        @include flexBox(center, center)
+        color:#000
+        font-weight: bolder
+        font-size: 24px
+        
+        position: relative
+        .txt
+            display: none
+        
+        &.q1 
+            background: url('./img/chat_1.svg') no-repeat center center
+            .q1.txt
+                display: block
+            &::after 
+                background: url('./img/deegooq_1.svg') no-repeat center center 
+                background-size: 100%
+        &.q2
+            background: url('./img/chat_2.svg') no-repeat center center
+            .q2.txt
+                display: block
+            &::after 
+                background: url('./img/deegooq_2.svg') no-repeat center center 
+                background-size: 100%
+        &.q3
+            background: url('./img/chat_3.svg') no-repeat center center
+            .q3.txt
+                display: block
+            &::after 
+                background: url('./img/deegooq_3.svg') no-repeat center center 
+                background-size: 100%
+        &.q4
+            background: url('./img/chat_4.svg') no-repeat center center
+            .q4.txt
+                display: block
+            &::after 
+                background: url('./img/deegooq_4.svg') no-repeat center center 
+                background-size: 100%
+        &.q5
+            background: url('./img/chat_5.svg') no-repeat center center
+            .q5.txt
+                display: block
+            &::after 
+                background: url('./img/deegooq_5.svg') no-repeat center center 
+                background-size: 100%
+
+        &::after
+            content: ''
+            position: absolute
+            width: 100px
+            height: 100px
+            left: calc(50% - 100px)
+            bottom: 30px 
+
+        
+
+        
+
+
     #listBox
+        overflow-y: scroll
+        flex: 0 0 calc(100% - 430px)
         .listRow
             display: flex
             flex-direction: column

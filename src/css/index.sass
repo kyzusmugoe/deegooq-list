@@ -14,6 +14,7 @@ $PadWidth:650px
 @import './start.sass'
 @import './personal.sass'
 @import './list.sass'
+@import './count.sass'
 @import './player.sass'
 @import './end.sass'
 
@@ -43,19 +44,31 @@ body
             color:#000
 
         @include loading()
+
+
+        .subLogo
+            position: absolute
+            z-index: 100
+            width: 150px
+            height: 40px
+            top: 10px
+            left: 10px
+            background: url('../img/logo_ex2.svg') no-repeat center center
             
+
         &.landscape
-            overflow: hidden
-            @include flexBox(center, center)
             width: 100%
             height: 100%
-            background:#38246c url('../img/bg_l.jpg') no-repeat 
-            background-size: 1300px
-            background-position: 0 -90px
+            overflow: hidden
+            @include flexBox(center, center)
+       
+            background:#114368 url('../img/bg_l.jpg') no-repeat 
+            background-size: 100%
             .logo
                 position: absolute
-                top:30px
-                left:30px
+                width: 120px
+                top:20px
+                left:20px
             .box
                 @include flexBox(center, flex-end)
                 .character
@@ -69,6 +82,7 @@ body
                         width: 250px
                         height: 160px
                         .text 
+                            color:#000
                             margin-left: 20px
                             width: 180px
                             font-style: normal
@@ -76,13 +90,7 @@ body
                             font-size: 20px
 
         //元件
-        #runnerBoxTool
-            @include flexBox(start, center)
-            #addRunner
-                background: none
-                border: none
-                font-size: 2em
-                color:$mainColor
+
 
         .complete
             font-size: 4em
@@ -170,6 +178,7 @@ body
             line-height: 35px
             letter-spacing: 0.1em
             text-align: center
+            z-index: 100
             &.arrow::after
                 content: ''
                 position: absolute
@@ -241,27 +250,28 @@ body
             display: flex
             flex-direction: column
 
-
             &.bg1
-                background:#38246c url('../img/bg_l.jpg') no-repeat 
-                background-size: 1300px
-                background-position: center -90px
+                background:#114368 url('../img/bg_l.jpg') no-repeat 
+                background-size: 100%
+                background-position: center
             &.listBg
                 position: relative
                 &::before
                     content:""
                     position: absolute
-                    background: url('../img/list_bg.svg') no-repeat center bottom
+                    background: url('../img/list_bg.svg') no-repeat center 250px
+                    background-size: 100%
                     width: 100%
                     height: 100%
                     bottom: 0
                     left: 0
+                    z-index: -1
             &.bg2
                 background:#39326c url('../img/bg2_l.svg') no-repeat 
                 background-size: 1000px
                 background-position: 0 -300px
             &.bg3
-                background:#38246c url('../img/bg3_l.svg') no-repeat 
+                background:#114368 url('../img/bg3_l.svg') no-repeat 
                 background-size: 240%
                 background-position: 0 -40%
             footer
@@ -291,7 +301,7 @@ body
 
             .row
                 width: 100%
-                max-width: 390px
+                //max-width: 390px
                 margin: 0 auto
                 @media screen and (min-width:$PadWidth)
                     margin-bottom: 15px
@@ -309,7 +319,7 @@ body
                         width: 100%
                 
                 &.fill
-                    flex: 0.8 0
+                    flex: 0.9 0
                 
                 //margin-bottom: 16px 
                 &.hori
@@ -383,5 +393,6 @@ body
         @include start()
         @include personal()
         @include list()
+        @include count()
         @include player()
         @include end() 

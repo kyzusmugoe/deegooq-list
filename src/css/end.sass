@@ -14,9 +14,19 @@
 
         img.logo
             padding: 40px 0
-        div.chatBox
+
+        button.backBtn
+            width: 200px
+            height: 80px
+            color: #fff
+            font-size: 24px
+            font-weight: bolder
+            border: none
+            background: url('../img/btn_main.svg') no-repeat center center
+            background-size: 100%
+            
+        #endChatBox
             color:#000
-            background: url('../img/chat_q2-1a.svg') no-repeat center center
             background-size: 100%
             max-width: 350px
             height: 240px
@@ -32,25 +42,57 @@
                 z-index: -1
                 animation: showRibbon .8s cubic-bezier( 0, 0.77, 0.19, 0.97 ) 
 
-            &::after
-                background: url('../img/deegooq_2.svg') no-repeat center center
+            &::after                
                 max-width: 110px
                 height: 80px
                 left: 50px
                 bottom: 0
                 z-index: 1
 
-            &::before, &::after
-                content: ''                
-                position: absolute
-                background-size: 100%
-                width: 100%
+           
 
             div.text
                 width: 240px
                 font-size: 20px
                 font-weight: 700
                 line-height: 29px
+
+            
+            &.q1
+                background: url('../img/chat_1.svg') no-repeat center center
+                &::after
+                    background: url('../img/deegooq_1.svg') no-repeat center center
+                    background-size: 100%
+            
+            &.q2
+                background: url('../img/chat_2.svg') no-repeat center center
+                &::after
+                    background: url('../img/deegooq_2.svg') no-repeat center center
+                    background-size: 100%
+
+            &.q3
+                background: url('../img/chat_3.svg') no-repeat center center
+                &::after
+                    background: url('../img/deegooq_3.svg') no-repeat center center
+                    background-size: 100%
+            
+            &.q4
+                background: url('../img/chat_4.svg') no-repeat center center
+                &::after
+                    background: url('../img/deegooq_4.svg') no-repeat center center
+                    background-size: 100%
+
+            &.q5
+                background: url('../img/chat_5.svg') no-repeat center center
+                &::after
+                    background: url('../img/deegooq_5.svg') no-repeat center center
+                    background-size: 100%
+
+            &::before, &::after
+                content: ''                
+                position: absolute
+                background-size: 100%
+                width: 100%
 
         .character
             margin-top: 200px

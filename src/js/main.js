@@ -10,7 +10,32 @@ let youPlayer;
 let mesgPack=[];
 //讀取圖片資源管理
 const loadImgManager = ()=>{
-    const assetsList = ['logo.svg']
+    const assetsList = [
+        'akar-icons_arrow-left.svg',
+        'bg_l.jpg',
+        'bg_m.jpg',
+        'btn_lg.svg',
+        'btn_main.svg',
+        'bubble.svg',
+        'chat_1.svg',
+        'chat_2.svg',
+        'chat_3.svg',
+        'chat_4.svg',
+        'chat_5.svg',
+        'circle-notch-solid.svg',
+        'deegooq_1.svg',
+        'deegooq_2.svg',
+        'deegooq_3.svg',
+        'deegooq_4.svg',
+        'deegooq_5.svg',
+        'footer_1.svg',
+        'list_bg.svg',
+        'logo.svg',
+        'logo_ex2.svg',
+        'pleaseTurn.svg',
+        'ribbon.svg',
+        'timer.svg',
+    ]
     let ct = 0
     const loadImgAssets = url =>{
         const img = new Image()
@@ -184,13 +209,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
     //#region 建立自定義播放器物件
     let myPlayer = new MyPlayer()
+
+    /*目前暫時沒用到影片播放時安插的訊息
     myPlayer.countAction =()=>{
-         mesgPack.map(pack=>{
-             if(pack.time == myPlayer.timeCount){
-                 console.log(pack.text)
-             }
-         })
-     }
+        mesgPack.map(pack=>{
+            if(pack.time == myPlayer.timeCount){
+                console.log(pack.text)
+            }
+        })
+    }
+    */
     myPlayer.doEnd =()=>{
         openPage('#end')
     }
@@ -223,30 +251,33 @@ document.addEventListener('DOMContentLoaded', () => {
         return barBox
     }
 
-    const setMovList = type=>{
+    const setMovList = type =>{
         clearMovList()
         const box = document.querySelector('#listBox')
+        const chart = document.querySelector('#characterChart')
+        const end = document.querySelector('#endChatBox')
+        const backListBtn = document.querySelector("#backList")
+        
         let prepareToPlay = 5 
-
         const gotoPlay = ()=>{
             myPlayer.unMute()
             myPlayer.replay()//重新開始播放
             openPage('#player')
         }
 
-        const count =()=>{
-            prepareToPlay--
-            setTimeout(()=>{
-                if(prepareToPlay == 0){
-                    gotoPlay()
-                    prepareToPlay = 5
-                }else{
-                    count()
-                }
-            }, 1000)
-            console.log(prepareToPlay)
+        const showBakBtn = ()=>{
+            backListBtn.classList.add('show')
+            setTimeout(() => {
+                backListBtn.classList.remove('show')
+            }, 7000);
         }
-        
+        //列表的腳色切換
+        chart.className = "";
+        chart.classList.add(type)
+        //結束畫面的腳色切換
+        end.className = "";
+        end.classList.add(type)
+        //清單按鈕
         mainData[type].list.map(data=>{
             const row = document.createElement('div')
             const txt = document.createElement('span')
@@ -262,12 +293,28 @@ document.addEventListener('DOMContentLoaded', () => {
                 myPlayer.play()//先播放，避免看到標頭
                 myPlayer.mute()
 
-                count()
+                //count()
+                setTimeout(()=>{
+                    gotoPlay()
+                }, 5400)
             })
             row.appendChild(txt)
             row.appendChild(bar)
             box.appendChild(row)
         })
+        
+        //點擊影片播放的地方，顯示回上頁按鈕
+        showBakBtn()
+        document.querySelector("#clickToShowBtn").addEventListener('click', ()=>{
+            showBakBtn()
+        })
+
+        //播放畫面的回上頁按鈕控制
+        backListBtn.addEventListener('click', ()=>{
+            myPlayer.pause()
+            openPage("#list")
+        })
+
         openPage('#list')
     }
     
@@ -283,9 +330,11 @@ document.addEventListener('DOMContentLoaded', () => {
             btn.classList.add("typeBtn", key)
             btn.addEventListener("click", event=>{
                 const _t = event.target.dataset.type
+                
                 if(mainData[_t].list){
                     setMovList(_t)
                 }
+                
             })
             box.appendChild(btn)
         }
@@ -298,23 +347,7 @@ document.addEventListener('DOMContentLoaded', () => {
     //document.querySelector(`#${currentPage}`).style.display = "flex"
     document.querySelector('#start').style.display = "flex"
     setBtnsHandler()
-    /*
-    document.querySelector("#yPlay").addEventListener('click', ()=>{
-        myPlayer.pause()
-    })
 
-    document.querySelector("#yStop").addEventListener('click', ()=>{
-        myPlayer.pause()  
-    })
-    document.querySelector("#yBack").addEventListener('click', ()=>{
-        myPlayer.pause()
-        openPage("#list")
-    })
-    */
-    console.log(document.querySelector("#backList"))
-    document.querySelector("#backList").addEventListener('click', ()=>{
-        myPlayer.pause()
-        openPage("#list")
-    })
+    
 })
 
