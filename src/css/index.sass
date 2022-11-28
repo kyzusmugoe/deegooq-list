@@ -32,14 +32,27 @@ body,html
     font-family: 'Noto Sans TC', sans-serif
 body
     color: #fff
-    background-color: #ccc
+    background: rgb(34,89,118)
+    background: -moz-linear-gradient(0deg, rgba(34,89,118,1) 0%, rgba(52,99,119,1) 100%)
+    background: -webkit-linear-gradient(0deg, rgba(34,89,118,1) 0%, rgba(52,99,119,1) 100%)
+    background: linear-gradient(0deg, rgba(34,89,118,1) 0%, rgba(52,99,119,1) 100%)
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#225976",endColorstr="#346377",GradientType=1)
+    #debug
+        display: none
+        position: fixed
+        top: 0
+        left: 0
+        color: #fff
+        background-color: rgba(0, 0, 0, .5)
+        z-index: 100
+        pointer-events: none
     .app      
-
         height: 100%        
         margin: 0 auto
         @include flexBox(start, center)
         flex-direction: column
-
+        background-color: #346377
+        
         button
             color:#000
 

@@ -11,7 +11,9 @@
             padding-top: 40px
             @media screen and (max-height:660px)
                 width: 200px
-                padding-top: 20px 
+                padding-top: 20px
+            @media screen and (min-height:900px)
+                width: 300px 
         
         .intro
             margin-top: 20px
@@ -23,7 +25,8 @@
             display: flex
             flex-direction: column
             align-items: center
-
+            @media screen and (min-height:900px)
+                margin-top: 30px
         .typeBtn
             font-size: 24px
             display: flex
@@ -31,11 +34,13 @@
             align-items: center
             width: 210px
             height: 80px
-            background-image: url('./img/btn_main.svg')
+            background-image: url('../img/btn_main.svg')
             background-repeat: no-repeat
             background-position: center
             background-size:100%
             position: relative 
+            @media screen and (min-height:900px)
+                margin-bottom: 10px
             &::after
                 content:""
                 position: absolute
@@ -52,13 +57,13 @@
                 transform: translateX(-70px)
                 &::after
                     left: 10px
-                    background-image: url('./img/deegooq_1.svg')
+                    background-image: url('../img/deegooq_1.svg')
             &.q2
                 transform: translateX(70px)
                 &::after
                     transform: rotate(7deg)
                     right: 10px
-                    background-image: url('./img/deegooq_2.svg')
+                    background-image: url('../img/deegooq_2.svg')
             &.q3
                 transform: translateX(-70px)
                 &::after
@@ -66,20 +71,20 @@
                     top: -30px
                     transform: rotate(-7deg)
                     left: 10px
-                    background-image: url('./img/deegooq_3.svg')
+                    background-image: url('../img/deegooq_3.svg')
             &.q4
                 transform: translateX(70px)
                 &::after
                     transform: rotate(7deg)
                     right: 10px
-                    background-image: url('./img/deegooq_4.svg')
+                    background-image: url('../img/deegooq_4.svg')
             &.q5
                 transform: translateX(-70px)
                 &::after
                     transform: rotate(-7deg)
                     top: -15px
                     left: 10px
-                    background-image: url('./img/deegooq_5.svg')
+                    background-image: url('../img/deegooq_5.svg')
         .BPBtn.pageBtn.main
             @media screen and (min-width:$PadWidth)
                 margin-top: 60px 

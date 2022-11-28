@@ -1,14 +1,9 @@
-//使用者資料 從localStorage取得deegooq_current_page的頁面資料
-if(window.localStorage.getItem('deegooq_current_data') && currentPage != 'start'){
-    collectData =JSON.parse( window.localStorage.getItem('deegooq_current_data'))
-    console.log('deegooq_current_page', collectData)
-}
-
 //json資料容器
 let mainData={}
 let youPlayer;
 let mesgPack=[];
-//讀取圖片資源管理
+
+//#region 讀取圖片資源管理
 const loadImgManager = ()=>{
     const assetsList = [
         'akar-icons_arrow-left.svg',
@@ -53,35 +48,60 @@ const loadImgManager = ()=>{
     }
     loadImgAssets(`./img/${assetsList[ct]}`)
 }
+//#endregion
 
-//#region自定義播放器
+//#region IPAD debug用
+let debuggerMesh = {}
+const setDebugger = (label, value) =>{
+    //let _mesg = {...debuggerMesh}
+    debuggerMesh[label] = value
+    let txt = ""
+    for(let _val in debuggerMesh){
+        txt +=`${_val}:${debuggerMesh[_val]} <br/>`
+    }
+    document.querySelector("#debug").innerHTML = txt
+}
+//#endregion
+
+//#region 自定義播放器
 class MyPlayer{
     YTPlayer={}
     timeCount = 0
     countAction=(time)=>{}//計時器的行為
     doEnd = ()=>{}//結束後行為
     interval = null
-    
+    endSw = false
     constructor(){
         console.log('init MyPlayer')
         setTimeout(() => {
             this.YTPlayer = new YT.Player('youPlayer', {
-                playerVars: {
+                /*playerVars: {
                     'controls': 0,
                     'modestbranding':1,
                     'autoplay':1,
                     'showinfo':0
-                },
+                },*/
+                videoId: 'Qtn7eOGjNJA',
                 events: {
                     'onReady':  e=>{
-                        console.log(e)                    
+                        console.log(e)  
+                        this.YTPlayer.playVideo();                  
                         //e.target.loadVideoById('DmWoaB7fM5U')
                     },
                     'onStateChange': e=>{
-                        console.log(e)
-                        if(e.data == 1) this.interval = setInterval(this.intervalAction, 1000)
-                        if(e.data == 0 || e.data == 2) clearInterval(this.interval)
-                        if(e.data == 0) this.doEnd()
+                        setDebugger("MyPlayer", JSON.stringify(e.data))
+                        if(e.data == 1) {
+                            //this.interval = setInterval(this.intervalAction, 1000); 
+                        }
+                        //if(e.data == 0 || e.data == 2) clearInterval(this.interval)
+                        if(e.data == 0){
+                            console.log("end", this.endSw)
+                            if(this.endSw){
+                                this.doEnd()
+                                this.endSw = false
+
+                            }
+                        }
                     }
                 }
             });
@@ -97,12 +117,16 @@ class MyPlayer{
         this.timeCount = 0
         this.YTPlayer.loadVideoById(id)
         this.YTPlayer.pauseVideo();
+        this.YTPlayer.mute();
     }
     play = () =>{
+        this.YTPlayer.unMute();
         this.YTPlayer.playVideo();
     }
     replay = () =>{
+        this.YTPlayer.unMute();
         this.YTPlayer.seekTo(0);
+        this.YTPlayer.playVideo();
     }
     mute = () =>{
         this.YTPlayer.mute();
@@ -136,18 +160,21 @@ window.onload = () => {
 //#endregion
 
 document.addEventListener('DOMContentLoaded', () => {
-   
-
+    
     //#region 偵測頁面方向
     const detectOrientation =  () => {
-        //console.log( window.orientation )
-        if(window.orientation == 90  || window.orientation == -90 ){
-            document.querySelector(".app.landscape").style.display = 'flex'
-            document.querySelector(".app.portrait").style.display = 'none'
-        }else{
-            document.querySelector(".app.landscape").style.display = 'none'
-            document.querySelector(".app.portrait").style.display = 'flex'
-        }
+        setTimeout(() => {
+            
+            //console.log( window.orientation )
+            if(window.orientation == 90  || window.orientation == -90 ){
+                document.querySelector(".app.landscape").style.display = 'flex'
+                document.querySelector(".app.portrait").style.display = 'none'
+            }else{
+                document.querySelector(".app.landscape").style.display = 'none'
+                document.querySelector(".app.portrait").style.display = 'flex'
+            }
+            setDebugger( "window.orientation", window.orientation)
+        }, 500);
     }
     window.addEventListener('resize', detectOrientation)
     detectOrientation()
@@ -258,11 +285,11 @@ document.addEventListener('DOMContentLoaded', () => {
         const end = document.querySelector('#endChatBox')
         const backListBtn = document.querySelector("#backList")
         
-        let prepareToPlay = 5 
+        //let prepareToPlay = 5 
         const gotoPlay = ()=>{
             myPlayer.unMute()
             myPlayer.replay()//重新開始播放
-            openPage('#player')
+            //openPage('#player')
         }
 
         const showBakBtn = ()=>{
@@ -288,14 +315,23 @@ document.addEventListener('DOMContentLoaded', () => {
             row.addEventListener('click', ()=>{
                 mesgPack = data.mesg
                 myPlayer.setMov(data.videoId)
-                //openPage('#player')
-                openPage('#count')
-                myPlayer.play()//先播放，避免看到標頭
                 myPlayer.mute()
+                openPage('#player')
+                //openPage('#count')
+                //myPlayer.play()//先播放，避免看到標頭
 
                 //count()
+                //gotoPlay()
+                myPlayer.endSw = true
+                console.log(myPlayer.endSw)
+
+                document.querySelector("#count").style.display= 'flex'                
                 setTimeout(()=>{
+                    myPlayer.replay()
                     gotoPlay()
+                    setTimeout(()=>{
+                        document.querySelector("#count").style.display= 'none'                
+                    }, 200)
                 }, 5400)
             })
             row.appendChild(txt)
@@ -312,6 +348,7 @@ document.addEventListener('DOMContentLoaded', () => {
         //播放畫面的回上頁按鈕控制
         backListBtn.addEventListener('click', ()=>{
             myPlayer.pause()
+            myPlayer.mute()
             openPage("#list")
         })
 
@@ -345,7 +382,7 @@ document.addEventListener('DOMContentLoaded', () => {
     loadImgManager()
     loadData()
     //document.querySelector(`#${currentPage}`).style.display = "flex"
-    document.querySelector('#start').style.display = "flex"
+    document.querySelector('#start').style.display = "flex" 
     setBtnsHandler()
 
     

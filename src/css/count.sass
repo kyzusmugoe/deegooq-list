@@ -1,11 +1,21 @@
 @mixin count()
     $size: 180px
+    $txtPos: 92px
     #count
-        
+        @include flexBox(center, center)
+        width: 100%
+        margin: 0 auto
+        height: 100%
+        position: absolute
+        top: 0
+        left: 0
+        background-image: url('../img/bg_m.jpg')
+        background-size: 100%
+        z-index: 100
         #bubble
             width: $size
             height: $size
-            background-image: url('./img/bubble.svg')
+            background-image: url('../img/bubble.svg')
             background-size: ($size * 6) auto
             background-repeat: no-repeat
             animation: bubbleAmin 1s
@@ -18,25 +28,51 @@
             font-size: 4em
             font-weight: bolder
             text-shadow: 0 0 10px rgba(0, 0, 0, .8)
-            &::after
-                content: ''
-                animation: countAmin 5s
-                animation-iteration-count: 1
-                animation-timing-function: step-end
+            .countBox
+                @include flexBox(flex-start, center)
+                flex-direction: column
+                width: 80px
+                height: 100px
+                overflow: hidden
+                .countTxt
+                    @include flexBox(center, center)
+                    width: 80px
+                    animation: countAmin 5s                    
+                    animation-iteration-count: 1
+                    animation-timing-function: step-end            
+                    animation-fill-mode: forwards
+                    
+            /*
+                &:after, &::after
+                    width: 50px
+                    height: 100px
+                    text-align: center
+                    animation: countAmin 5s
+                    animation-iteration-count: 1
+                    animation-iteration-count: infinite
+                    animation-timing-function: step-end
+
+
     
     @keyframes countAmin
         0%
-            content: '5'
+            //content: '5'
+            transform: translateY(0)
         20%
-            content: '4'
+            transform: translateY(-$txtPos)
+            //content: '4'
         40%
-            content: '3'
+            transform: translateY(-$txtPos * 2)
+            //content: '3'
         60%
-            content: '2'
+            transform: translateY(-$txtPos * 3)
+            //content: '2'
         80%
-            content: '1'
+            transform: translateY(-$txtPos * 4)
+            //content: '1'
         100%
-            content: ''
+            transform: translateY(-$txtPos * 5)
+            //content: ''
 
     @keyframes bubbleAmin
         0%

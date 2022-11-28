@@ -28,12 +28,15 @@
         #endChatBox
             color:#000
             background-size: 100%
+            width: 100%
             max-width: 350px
             height: 240px
             text-align: center
             //margin: -30px 0 0 60px
             @include flexBox(center, center)
             position: relative
+            @media screen and (min-height:900px)
+                max-width: 1200px
             &::before
                 background: url('../img/ribbon.svg') no-repeat center center
                 max-width: 375px
@@ -41,14 +44,23 @@
                 top: -80px
                 z-index: -1
                 animation: showRibbon .8s cubic-bezier( 0, 0.77, 0.19, 0.97 ) 
+                @media screen and (min-height:900px)
+                    max-width: 500px
+                    height: 400px
+                    top: -200px
 
             &::after                
                 max-width: 110px
                 height: 80px
-                left: 50px
-                bottom: 0
+                left: calc(50% - 100px)
+                bottom: -30px
                 z-index: 1
-
+                @media screen and (min-height:900px)
+                    
+                    max-width: 180px
+                    height: 120px
+                    left: calc(50% - 150px)
+                    bottom: -60px
            
 
             div.text
@@ -56,7 +68,9 @@
                 font-size: 20px
                 font-weight: 700
                 line-height: 29px
-
+                @media screen and (min-height:900px)
+                    font-size: 32px
+                    line-height: 42px
             
             &.q1
                 background: url('../img/chat_1.svg') no-repeat center center
@@ -93,6 +107,7 @@
                 position: absolute
                 background-size: 100%
                 width: 100%
+           
 
         .character
             margin-top: 200px

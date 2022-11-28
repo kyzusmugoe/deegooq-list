@@ -2,14 +2,14 @@ doctype html
 html
     include ./comps/header.pug
     body 
+        span#debug
         include ./comps/landscape.pug
         div.app.portrait(style="display:none")
             //首頁
             include ./comps/start.pug
             //列表
             include ./comps/list.pug
-            //倒數
-            include ./comps/count.pug
+            
             //播放器
             include ./comps/player.pug
             //結束畫面
